@@ -4,13 +4,13 @@ Bevy plugin for axes gizmo.
 To use, add the `AxesGizmoSyncCamera` marker type to a camera. This will make the axes follow this camera.
 
 Add the `AxesGizmoPlugin` to your app. This updates the axes  texture every frame.
-```
+```rust
 App::new()
   .add_plugins(AxesGizmoPlugin)
 ```
 
 Then, the bevy resource `AxesGizmoTexture` has a handle to the image of the axes. It can then be added to the ui. This is an example of how to do so as a child of an absolute positioned node.
-```
+```rust
 fn add_axes_texture(
   axes_texture: Res<AxesGizmoTexture>
 ) {
