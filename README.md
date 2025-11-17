@@ -2,7 +2,8 @@
 
 # Bevy Axes Gizmo
 
-add gif :)
+![bevy-axes-gizmo-demo](https://github.com/user-attachments/assets/d7fb06cd-fdfa-404c-a50b-b581fa55dd8d)
+
 
 ## Summary
 
