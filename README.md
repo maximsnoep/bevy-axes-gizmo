@@ -7,7 +7,7 @@
 
 ## Summary
 
-Bevy Axes Gizmo is a plugin for the [Bevy](https://bevyengine.org) game engine that provides a simple gizmo for visualizing the three coordinate axes of the scene, synchronized with the orientation of the main camera. 
+Bevy Axes Gizmo is a plugin for the [Bevy](https://bevyengine.org) engine that provides a simple gizmo for visualizing the three coordinate axes of the scene, synchronized with the orientation of the main camera. 
 
 ## How to use
 
