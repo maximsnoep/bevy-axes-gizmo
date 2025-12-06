@@ -1,7 +1,7 @@
+use bevy::camera::visibility::RenderLayers;
 use bevy::color::Color;
 use bevy::prelude::*;
 use bevy::render::render_resource::{Extent3d, TextureDescriptor, TextureDimension, TextureFormat, TextureUsages};
-use bevy::render::view::RenderLayers;
 
 // Public handle to the offscreen texture so you can use it in your UI.
 #[derive(Resource, Clone)]
@@ -69,7 +69,7 @@ fn setup(
     mut commands: Commands,
     plugin_config: Res<AxesGizmoPlugin>,
     mut images: ResMut<Assets<Image>>,
-    mut meshes: ResMut<Assets<bevy::render::mesh::Mesh>>,
+    mut meshes: ResMut<Assets<bevy::mesh::Mesh>>,
     mut mats: ResMut<Assets<StandardMaterial>>,
 ) {
     let mesh_axis = meshes.add(Cuboid::new(plugin_config.length, plugin_config.width, plugin_config.width));
@@ -142,15 +142,15 @@ fn setup(
 
 // Synchronize AxesGizmoCamera with AxesGizmoSyncCamera
 fn sync(mut axis_cam_q: Query<&mut Transform, With<AxesGizmoCamera>>, main_cameras_q: Query<&GlobalTransform, With<AxesGizmoSyncCamera>>) {
-    if let Ok(mut axis_t) = axis_cam_q.single_mut() {
-        if let Ok(main_gt) = main_cameras_q.single() {
-            let rot = main_gt.rotation();
+    if let Ok(mut axis_t) = axis_cam_q.single_mut()
+        && let Ok(main_gt) = main_cameras_q.single()
+    {
+        let rot = main_gt.rotation();
 
-            let eye = -(rot * -Vec3::Z) * 100.;
-            *axis_t = Transform::from_translation(eye);
+        let eye = -(rot * -Vec3::Z) * 100.;
+        *axis_t = Transform::from_translation(eye);
 
-            let up = rot * Vec3::Y;
-            axis_t.look_at(Vec3::ZERO, up);
-        }
+        let up = rot * Vec3::Y;
+        axis_t.look_at(Vec3::ZERO, up);
     }
 }
