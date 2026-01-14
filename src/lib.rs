@@ -1,3 +1,4 @@
+use bevy::camera::RenderTarget;
 use bevy::camera::visibility::RenderLayers;
 use bevy::color::Color;
 use bevy::prelude::*;
@@ -131,10 +132,10 @@ fn setup(
         Camera3d::default(),
         Projection::Orthographic(OrthographicProjection::default_3d()),
         Camera {
-            target: handle.into(),
             clear_color: ClearColorConfig::Custom(Color::NONE),
             ..default()
         },
+        RenderTarget::Image(handle.into()),
         RenderLayers::layer(plugin_config.rendering_layer),
         AxesGizmoCamera,
     ));
