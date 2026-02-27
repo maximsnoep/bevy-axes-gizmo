@@ -1,9 +1,11 @@
 use bevy::camera::RenderTarget;
 use bevy::camera::visibility::RenderLayers;
 use bevy::color::Color;
+use bevy::core_pipeline::tonemapping::Tonemapping;
 use bevy::prelude::*;
-use bevy::render::render_resource::{Extent3d, TextureDescriptor, TextureDimension, TextureFormat, TextureUsages};
-
+use bevy::render::render_resource::{
+    Extent3d, TextureDescriptor, TextureDimension, TextureFormat, TextureUsages,
+};
 // Public handle to the offscreen texture so you can use it in your UI.
 #[derive(Resource, Clone)]
 pub struct AxesGizmoTexture(pub Handle<Image>);
@@ -54,7 +56,11 @@ impl Plugin for AxesGizmoPlugin {
 impl Default for AxesGizmoPlugin {
     fn default() -> Self {
         Self {
-            colors: [Color::linear_rgb(1., 0., 0.), Color::linear_rgb(0., 1., 0.), Color::linear_rgb(0., 0., 1.)],
+            colors: [
+                Color::linear_rgb(1., 0., 0.),
+                Color::linear_rgb(0., 1., 0.),
+                Color::linear_rgb(0., 0., 1.),
+            ],
             length: 99.,
             width: 2.,
             rendering_layer: 13,
@@ -73,7 +79,11 @@ fn setup(
     mut meshes: ResMut<Assets<bevy::mesh::Mesh>>,
     mut mats: ResMut<Assets<StandardMaterial>>,
 ) {
-    let mesh_axis = meshes.add(Cuboid::new(plugin_config.length, plugin_config.width, plugin_config.width));
+    let mesh_axis = meshes.add(Cuboid::new(
+        plugin_config.length,
+        plugin_config.width,
+        plugin_config.width,
+    ));
 
     // X AXIS
     let mut mat_x = StandardMaterial::from_color(plugin_config.colors[0]);
@@ -91,7 +101,8 @@ fn setup(
     commands.spawn((
         Mesh3d(mesh_axis.clone()),
         MeshMaterial3d(mats.add(mat_y)),
-        Transform::from_rotation(Quat::from_rotation_z(std::f32::consts::FRAC_PI_2)).with_translation(Vec3::Y * (plugin_config.length * 0.5)),
+        Transform::from_rotation(Quat::from_rotation_z(std::f32::consts::FRAC_PI_2))
+            .with_translation(Vec3::Y * (plugin_config.length * 0.5)),
         RenderLayers::layer(plugin_config.rendering_layer),
     ));
 
@@ -101,7 +112,8 @@ fn setup(
     commands.spawn((
         Mesh3d(mesh_axis.clone()),
         MeshMaterial3d(mats.add(mat_z)),
-        Transform::from_rotation(Quat::from_rotation_y(std::f32::consts::FRAC_PI_2)).with_translation(Vec3::Z * (plugin_config.length * 0.5)),
+        Transform::from_rotation(Quat::from_rotation_y(std::f32::consts::FRAC_PI_2))
+            .with_translation(Vec3::Z * (plugin_config.length * 0.5)),
         RenderLayers::layer(plugin_config.rendering_layer),
     ));
 
@@ -118,7 +130,9 @@ fn setup(
             format: TextureFormat::Bgra8UnormSrgb,
             mip_level_count: 1,
             sample_count: 1,
-            usage: TextureUsages::TEXTURE_BINDING | TextureUsages::COPY_DST | TextureUsages::RENDER_ATTACHMENT,
+            usage: TextureUsages::TEXTURE_BINDING
+                | TextureUsages::COPY_DST
+                | TextureUsages::RENDER_ATTACHMENT,
             view_formats: &[],
         },
         ..default()
@@ -135,6 +149,7 @@ fn setup(
             clear_color: ClearColorConfig::Custom(Color::NONE),
             ..default()
         },
+        Tonemapping::None,
         RenderTarget::Image(handle.into()),
         RenderLayers::layer(plugin_config.rendering_layer),
         AxesGizmoCamera,
@@ -142,7 +157,10 @@ fn setup(
 }
 
 // Synchronize AxesGizmoCamera with AxesGizmoSyncCamera
-fn sync(mut axis_cam_q: Query<&mut Transform, With<AxesGizmoCamera>>, main_cameras_q: Query<&GlobalTransform, With<AxesGizmoSyncCamera>>) {
+fn sync(
+    mut axis_cam_q: Query<&mut Transform, With<AxesGizmoCamera>>,
+    main_cameras_q: Query<&GlobalTransform, With<AxesGizmoSyncCamera>>,
+) {
     if let Ok(mut axis_t) = axis_cam_q.single_mut()
         && let Ok(main_gt) = main_cameras_q.single()
     {
