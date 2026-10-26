@@ -2,7 +2,7 @@
 
 # bevy-axes-gizmo
 
-![bevy-axes-gizmo-demo](https://github.com/user-attachments/assets/d7fb06cd-fdfa-404c-a50b-b581fa55dd8d)
+<img src="assets/demo.webp" alt="bevy-axes-gizmo demo" width="400">
 
 bevy-axes-gizmo is a plugin for the [Bevy](https://bevyengine.org) engine that provides a simple gizmo for visualizing the three coordinate axes of the scene, synchronized with the orientation of the main camera. 
 
