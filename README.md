@@ -4,7 +4,6 @@
 
 ![bevy-axes-gizmo-demo](https://github.com/user-attachments/assets/d7fb06cd-fdfa-404c-a50b-b581fa55dd8d)
 
-
 ## Summary
 
 Bevy Axes Gizmo is a plugin for the [Bevy](https://bevyengine.org) engine that provides a simple gizmo for visualizing the three coordinate axes of the scene, synchronized with the orientation of the main camera. 
@@ -57,30 +56,21 @@ fn render_axes_gizmo(
 
 ## Customization
 
-While instantiating the plugin you can customize the axes by supplying values for its colors, length, width, and rendering layer:
-```rust
-pub struct AxesGizmoPlugin {
-    pub colors: [Color; 3],
-    pub length: f32,
-    pub width: f32,
-    pub rendering_layer: usize,
-}
-```
-
-You can do the following to change the colors of the X-, Y-, and Z-axis to red, yellow, and blue:
+The plugin takes the colors, length and width of the axes, and the render layer of its scene:
 ```rust
 App::new()
   .add_plugins(AxesGizmoPlugin {
-    colors: [
-      Color::srgb(0.95, 0.5, 0.5), 
-      Color::srgb(0.95, 0.95, 0.7),
-      Color::srgb(0.5, 0.5, 0.95)
-    ],
+    colors: [Color::srgb(0.95, 0.5, 0.5), Color::srgb(0.95, 0.95, 0.7), Color::srgb(0.5, 0.5, 0.95)],
     ..default()
   })
 ```
 
-
+The colors can change at any time through the `AxesGizmoColors` resource:
+```rust
+fn recolor(mut colors: ResMut<AxesGizmoColors>) {
+  colors.0 = [Color::BLACK, Color::BLACK, Color::BLACK];
+}
+```
 
 ## Version Compatibility
 
@@ -89,4 +79,5 @@ App::new()
 | 0.16.2 | 0.1.x |
 | 0.17.3 | 0.2.x |
 | 0.18.0 | 0.3.x |
+| 0.20.0 | 0.4.x |
 

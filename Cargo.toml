@@ -1,14 +1,12 @@
 [package]
 name = "bevy-axes-gizmo"
 description = "A tiny Bevy plugin for an axes gizmo."
-version = "0.3.1"
+version = "0.4.0"
 repository = "https://github.com/maximsnoep/bevy-axes-gizmo"
 authors = ["Snoep <maxim@snoep.io>"]
 keywords = ["bevy", "gizmo", "plugin"]
 edition = "2024"
 license = "MIT"
 
-[dependencies.bevy]
-version = "0.18.0"
-default-features = false
-features = ["bevy_pbr"]
+[dependencies]
+bevy = { version = "0.20.0", default-features = false, features = ["bevy_pbr"] }
