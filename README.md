@@ -1,12 +1,10 @@
 [![Crates.io](https://img.shields.io/crates/v/bevy_axes_gizmo)](https://crates.io/crates/bevy_axes_gizmo)
 
-# Bevy Axes Gizmo
+# bevy-axes-gizmo
 
 ![bevy-axes-gizmo-demo](https://github.com/user-attachments/assets/d7fb06cd-fdfa-404c-a50b-b581fa55dd8d)
 
-## Summary
-
-Bevy Axes Gizmo is a plugin for the [Bevy](https://bevyengine.org) engine that provides a simple gizmo for visualizing the three coordinate axes of the scene, synchronized with the orientation of the main camera. 
+bevy-axes-gizmo is a plugin for the [Bevy](https://bevyengine.org) engine that provides a simple gizmo for visualizing the three coordinate axes of the scene, synchronized with the orientation of the main camera. 
 
 ## How to use
 
