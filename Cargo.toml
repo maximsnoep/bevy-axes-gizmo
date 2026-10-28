@@ -11,3 +11,6 @@ exclude = ["assets"]
 
 [dependencies]
 bevy = { version = "0.20.0", default-features = false, features = ["bevy_pbr"] }
+
+[dev-dependencies]
+bevy = { version = "0.20.0", features = ["bevy_ui"] }
