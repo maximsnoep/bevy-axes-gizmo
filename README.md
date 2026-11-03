@@ -25,4 +25,10 @@ cargo run --example basic
 
 ## Versions
 
-The version matches Bevy's: use `bevy-axes-gizmo 0.X` with `bevy 0.X` (0.16 and up).
+| bevy | bevy-axes-gizmo |
+|------|-----------------|
+| 0.20 | 0.20 |
+| 0.19 | 0.19 |
+| 0.18 | 0.18 |
+| 0.17 | 0.17 |
+| 0.16 | 0.16 |
