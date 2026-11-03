@@ -25,14 +25,4 @@ cargo run --example basic
 
 ## Versions
 
-The crate's minor version tracks Bevy's: `bevy-axes-gizmo 0.X` is for `bevy 0.X`.
-
-| bevy   | bevy-axes-gizmo |
-|--------|-----------------|
-| 0.20.x | 0.20.x          |
-| 0.19.x | 0.19.x          |
-| 0.18.x | 0.18.x (or 0.3.x) |
-| 0.17.x | 0.17.x (or 0.2.x) |
-| 0.16.x | 0.16.x (or 0.1.x) |
-
-Versions `0.1`–`0.4` predate this scheme (`0.4.x` is Bevy 0.20).
+The version matches Bevy's: use `bevy-axes-gizmo 0.X` with `bevy 0.X` (0.16 and up).
