@@ -1,81 +1,38 @@
-[![Crates.io](https://img.shields.io/crates/v/bevy_axes_gizmo)](https://crates.io/crates/bevy_axes_gizmo)
+[![Crates.io](https://img.shields.io/crates/v/bevy-axes-gizmo)](https://crates.io/crates/bevy-axes-gizmo)
 
 # bevy-axes-gizmo
 
-<img src="assets/demo.webp" alt="bevy-axes-gizmo demo" width="400">
+<img src="demo.webp" alt="bevy-axes-gizmo demo" width="400">
 
-bevy-axes-gizmo is a plugin for the [Bevy](https://bevyengine.org) engine that provides a simple gizmo for visualizing the three coordinate axes of the scene, synchronized with the orientation of the main camera. 
+A tiny [Bevy](https://bevyengine.org) plugin that renders the X, Y and Z axes to a texture, following the orientation of your camera.
 
-## How to use
+## Usage
 
-To render your axes gizmo, add the crate to your project with `cargo add bevy-axes-gizmo` and follow these three steps:
-
-1. Add the `AxesGizmoPlugin` to your app.
 ```rust
 App::new()
-  .add_plugins(AxesGizmoPlugin::default())
+    .add_plugins(AxesGizmoPlugin::default())
 ```
 
-2. Add the `AxesGizmoSyncCamera` marker type to your main (moving) camera. This will synchronize the orientation of the axes with the orientation of the camera.
-```rust
-commands
-  .spawn((
-    Camera3d::default(),
-    Camera::default(),
-    AxesGizmoSyncCamera,
-  ))
+- Add `AxesGizmoSyncCamera` to the camera the gizmo should follow.
+- Read the rendered texture from the `AxesGizmoTexture` resource and show it in your UI (e.g. with an `ImageNode`).
+- Colors, axis length/width and render layer are fields on `AxesGizmoPlugin`. Colors can be changed at runtime through the `AxesGizmoColors` resource.
+
+See [`examples/basic.rs`](examples/basic.rs) for a full example:
+
+```sh
+cargo run --example basic
 ```
 
-3. Then, the bevy resource `AxesGizmoTexture` has a handle to the image of the axes gizmo. You can use this image in various ways. Below, you can find an example of how to render the image given an absolute position.
-```rust
-fn render_axes_gizmo(
-  axes_gizmo_image: Res<AxesGizmoTexture>
-) {
-  commands
-    .spawn((
-      Node {
-        position_type: PositionType::Absolute,
-        left: Val::Px(0.),
-        bottom: Val::Px(0.),
-        width: Val::Px(128.),
-        height: Val::Px(128.),
-        ..default()
-      },
-      BackgroundColor(Color::NONE),
-    ))
-    .with_children(|parent| {
-      parent.spawn(ImageNode {
-        image: axes_gizmo_image.0.clone(),
-        ..default()
-      });
-    });
-}
-```
+## Versions
 
-## Customization
+The crate's minor version tracks Bevy's: `bevy-axes-gizmo 0.X` is for `bevy 0.X`.
 
-The plugin takes the colors, length and width of the axes, and the render layer of its scene:
-```rust
-App::new()
-  .add_plugins(AxesGizmoPlugin {
-    colors: [Color::srgb(0.95, 0.5, 0.5), Color::srgb(0.95, 0.95, 0.7), Color::srgb(0.5, 0.5, 0.95)],
-    ..default()
-  })
-```
+| bevy   | bevy-axes-gizmo |
+|--------|-----------------|
+| 0.20.x | 0.20.x          |
+| 0.19.x | 0.19.x          |
+| 0.18.x | 0.18.x (or 0.3.x) |
+| 0.17.x | 0.17.x (or 0.2.x) |
+| 0.16.x | 0.16.x (or 0.1.x) |
 
-The colors can change at any time through the `AxesGizmoColors` resource:
-```rust
-fn recolor(mut colors: ResMut<AxesGizmoColors>) {
-  colors.0 = [Color::BLACK, Color::BLACK, Color::BLACK];
-}
-```
-
-## Version Compatibility
-
-| bevy | bevy_axes_gizmo |
-|------|-----------------|
-| 0.20.0 | 0.4.x |
-| 0.18.0 | 0.3.x |
-| 0.17.3 | 0.2.x |
-| 0.16.2 | 0.1.x |
-
+Versions `0.1`–`0.4` predate this scheme (`0.4.x` is Bevy 0.20).

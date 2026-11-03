@@ -5,7 +5,9 @@ use bevy::camera::RenderTarget;
 use bevy::camera::visibility::RenderLayers;
 use bevy::core_pipeline::tonemapping::{DebandDither, Tonemapping};
 use bevy::prelude::*;
-use bevy::render::render_resource::{Extent3d, TextureDescriptor, TextureDimension, TextureFormat, TextureUsages};
+use bevy::render::render_resource::{
+    Extent3d, TextureDescriptor, TextureDimension, TextureFormat, TextureUsages,
+};
 use std::f32::consts::FRAC_PI_2;
 
 /// The axes gizmo: its initial colors, the length and width of the axes, and the render layer of its scene.
@@ -88,7 +90,11 @@ fn setup(
         Quat::from_rotation_z(FRAC_PI_2),
         Quat::from_rotation_y(FRAC_PI_2),
     ];
-    for (axis, (turn, direction)) in turns.into_iter().zip([Vec3::X, Vec3::Y, Vec3::Z]).enumerate() {
+    for (axis, (turn, direction)) in turns
+        .into_iter()
+        .zip([Vec3::X, Vec3::Y, Vec3::Z])
+        .enumerate()
+    {
         let material = materials.add(StandardMaterial {
             base_color: colors.0[axis],
             unlit: true,
@@ -116,7 +122,9 @@ fn setup(
             format: TextureFormat::Bgra8UnormSrgb,
             mip_level_count: 1,
             sample_count: 1,
-            usage: TextureUsages::TEXTURE_BINDING | TextureUsages::COPY_DST | TextureUsages::RENDER_ATTACHMENT,
+            usage: TextureUsages::TEXTURE_BINDING
+                | TextureUsages::COPY_DST
+                | TextureUsages::RENDER_ATTACHMENT,
             view_formats: &[],
         },
         ..default()
@@ -149,7 +157,8 @@ fn follow_camera(
         && let Ok(synced) = synced.single()
     {
         let rotation = synced.rotation();
-        *transform = Transform::from_translation(rotation * Vec3::Z * 100.).looking_at(Vec3::ZERO, rotation * Vec3::Y);
+        *transform = Transform::from_translation(rotation * Vec3::Z * 100.)
+            .looking_at(Vec3::ZERO, rotation * Vec3::Y);
     }
 }
 
